@@ -253,3 +253,5 @@ config.json
 /config*.json  # Configs may have credentials
 /MODELS/
 /DATA/
+venv_311/
+DATA_ITB/

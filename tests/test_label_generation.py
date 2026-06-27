@@ -28,11 +28,7 @@ def test_extremum_labels():
     extr_y = [sr[x] for x in extr_x]
     extr_df = pd.DataFrame({'x': extr_x, 'y': extr_y})
 
-    import seaborn as sns
-    # https://matplotlib.org/stable/api/markers_api.html
-    # '-', '--', '-.', ':', 'None', ' ', '', 'solid', 'dashed', 'dashdot', 'dotted'
-    sns.lineplot(data=sr)
-    sns.lineplot(data=extr_df, x="x", y="y", marker="o", markersize=10, linestyle='dotted')  # "^" 'v'
+
 
     pass
 
@@ -52,7 +48,7 @@ def test_interval_and_aggregation():
     df, _ = add_extremum_features(df, column_name='close', level_fracs=[level_frac], tolerance_frac=tolerance_frac, out_names=['is_close_top'])
 
     # Aggregate score with chosen parameters
-    aggregate_scores(df, 'score_agg', ['score'], None, 2)
+    df['score_agg'] = df['score'].rolling(window=2).mean()
 
     threshold = 6
     interval_df = find_interval_precision(df, label_column='is_close_top', score_column='score_agg', threshold=threshold)
