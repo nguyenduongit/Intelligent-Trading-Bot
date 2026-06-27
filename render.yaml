@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: intelligent-trading-bot
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python -m service.server -c configs/config-sample-1min.jsonc"
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "true"
+      - key: TELEGRAM_BOT_TOKEN
+        value: "8763277886:AAHyZZVs9LlH3_hXPTNBtANgmKUh1pcz3UQ"
+      - key: TELEGRAM_CHAT_ID
+        value: "-1003861225485"

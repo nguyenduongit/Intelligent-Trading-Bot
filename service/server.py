@@ -251,6 +251,27 @@ def start_server(config_file):
     #
     # Start event loop and scheduler
     #
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+    import os
+    
+    class HealthCheckHandler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"Bot is running")
+            
+        def log_message(self, format, *args):
+            pass # Disable HTTP access logging to keep logs clean
+            
+    def run_health_server():
+        port = int(os.environ.get("PORT", 8080))
+        server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
+        server.serve_forever()
+        
+    threading.Thread(target=run_health_server, daemon=True).start()
+    log.info(f"Health check server started on port {os.environ.get('PORT', 8080)}")
     try:
         App.loop.run_forever()  # Blocking. Run until stop() is called
     except KeyboardInterrupt:

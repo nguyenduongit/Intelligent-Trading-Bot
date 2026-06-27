@@ -3,6 +3,7 @@ from typing import Union
 import json
 from datetime import datetime, date, timedelta
 import re
+import os
 
 import pandas as pd
 
@@ -76,8 +77,8 @@ class App:
         "mt5_server": "",
 
         # Telegram
-        "telegram_bot_token": "",  # Source address of messages
-        "telegram_chat_id": "",  # Destination address of messages
+        "telegram_bot_token": os.environ.get("TELEGRAM_BOT_TOKEN", "8763277886:AAHyZZVs9LlH3_hXPTNBtANgmKUh1pcz3UQ"),  # Source address of messages
+        "telegram_chat_id": os.environ.get("TELEGRAM_CHAT_ID", "-1003861225485"),  # Destination address of messages
 
         #
         # Conventions for the file and column names
